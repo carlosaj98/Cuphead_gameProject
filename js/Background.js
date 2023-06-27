@@ -11,7 +11,6 @@ class Background {
         this.img = new Image()
         this.img.src = "assets/environment/Sky.png"
 
-        this.dx = -0.5
     }
 
     draw() {
@@ -29,12 +28,6 @@ class Background {
             this.canvasH
         )
     }
-
-    move() {
-		this.x += this.dx
-
-		if (this.x <= -this.canvasW) this.x = 0
-	}
 }
 
 export default Background

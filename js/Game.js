@@ -8,8 +8,8 @@ import Boss from "./Boss.js"
 const Game = {
     fps: 60,
     ctx: undefined,
-    canvasW: innerWidth,
-    canvasH: innerHeight,
+    canvasW: 1536,
+    canvasH: 722,
     keys: {
         JUMP: 'Space',
         RIGHT: 'KeyD',
@@ -29,7 +29,6 @@ const Game = {
     reset: function () {
         this.background = new Background(this.ctx, this.canvasW, this.canvasH)
         this.floor = new Floor(this.ctx, this.canvasW, this.canvasH)
-        
         this.player = new Player(this.ctx, this.canvasW, this.canvasH, this.keys)
         this.waterFront = new WaterFront(this.ctx, this.canvasW, this.canvasH)
         this.waterBack = new WaterBack(this.ctx, this.canvasW, this.canvasH)
@@ -41,16 +40,31 @@ const Game = {
     start: function () {
         this.reset()
         this.intervalId = setInterval(() => {
+            this.clearCanvas()
+
             this.frameCounter++
+
             this.background.draw()
-            this.background.move()
+
             this.waterBack.draw(this.frameCounter)
+
             this.floor.draw()
+
             this.player.draw(this.frameCounter)
-            this.waterFront.draw(this.frameCounter)
+            this.player.move()
+
             this.boss.draw(this.frameCounter)
+            
+            this.waterFront.draw(this.frameCounter)
+
+            
+
         }, 1000 / this.fps)
     },
+
+    clearCanvas() {
+		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)
+	},
 }
 
 export default Game

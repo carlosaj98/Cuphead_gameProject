@@ -8,7 +8,7 @@ class WaterFront {
 
         this.x = 0
 
-        this.y = canvasH -250
+        this.y = canvasH -150
 
         this.vy = 0
 
@@ -19,7 +19,7 @@ class WaterFront {
         this.frameIndex = 0
 
         this.width = canvasW
-        this.height = 280
+        this.height = 200
 
         this.bullets = []
     }

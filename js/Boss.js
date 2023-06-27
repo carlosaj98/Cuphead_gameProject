@@ -19,8 +19,8 @@ class Boss {
         this.img.frameCount = 16
         this.frameIndex = 0
 
-        this.width = 500
-        this.height = 750
+        this.width = 600
+        this.height = 800
 
         this.bullets = []
     }
@@ -38,15 +38,15 @@ class Boss {
             this.width,
             this.height
         )
-        // this.animateSprite(frameCounter)
+        this.animateSprite(frameCounter)
     }
-    // animateSprite(frameCounter) {
-	// 	if (frameCounter % 5 === 0) {
-	// 		this.frameIndex++
-	// 	}
+    animateSprite(frameCounter) {
+		if (frameCounter % 5 === 0) {
+			this.frameIndex++
+		}
 
-	// 	if (this.frameIndex >= this.img.frameCount) this.frameIndex = 0
-	// }
+		if (this.frameIndex >= this.img.frameCount) this.frameIndex = 0
+	}
 }
 
 export default Boss

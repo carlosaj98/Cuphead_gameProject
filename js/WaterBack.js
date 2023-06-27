@@ -19,7 +19,7 @@ class WaterBack {
         this.frameIndex = 0
 
         this.width = canvasW
-        this.height = 500
+        this.height = 250
 
         this.bullets = []
     }
@@ -41,7 +41,7 @@ class WaterBack {
     }
 
     animateSprite(frameCounter) {
-		if (frameCounter % 6 === 0) {
+		if (frameCounter % 5 === 0) {
 			this.frameIndex++
 		}
 
