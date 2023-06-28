@@ -30,6 +30,7 @@ class Player {
 
         this.lastKey = "right";
         this.pressedKeys = {
+            attack: false,
             jump: false,
             right: false,
             left: false,
@@ -39,7 +40,10 @@ class Player {
     }
 
     setControls() {
-		addEventListener("mousedown" , () => this.shoot())
+        addEventListener("mousedown", () => {
+            this.pressedKeys.attack = true
+        })
+        addEventListener("mouseup", () => this.pressedKeys.attack = false)
 
         addEventListener("keydown", (event) => {
             switch (event.code) {
@@ -79,12 +83,17 @@ class Player {
             if (this.pressedKeys.right && this.y >= this.y0) {
                 this.img.src = "assets/character/Character_run.png";
                 this.img.frameCount = 16;
-                this.frameSpeed = 2;
+                this.frameSpeed = 3;
             } else if (this.pressedKeys.jump || this.y < this.y0) {
                 this.img.src = "assets/character/Character_jump.png";
                 this.img.frameCount = 8;
                 this.frameSpeed = 3;
-            } else {
+            }else if (this.pressedKeys.attack){
+                this.img.src = "assets/character/Character_attack.png";
+                this.img.frameCount = 3;
+                this.frameSpeed = 3;
+            }
+             else {
                 this.img.src = "assets/character/Character_idle.png";
                 this.img.frameCount = 5;
                 this.frameSpeed = 6;
@@ -97,6 +106,10 @@ class Player {
             } else if (this.pressedKeys.jump || this.y < this.y0) {
                 this.img.src = "assets/character/Character_jump_L.png";
                 this.img.frameCount = 8;
+                this.frameSpeed = 3;
+            }else if (this.pressedKeys.attack){
+                this.img.src = "assets/character/Character_attack_L.png";
+                this.img.frameCount = 3;
                 this.frameSpeed = 3;
             } else {
                 this.img.src = "assets/character/Character_idle_L.png";
@@ -133,7 +146,10 @@ class Player {
         this.bullets = this.bullets.filter(
             (bullet) => (bullet.x - bullet.radius > 0)
         );
-        console.log(this.bullets)
+        
+        if(this.pressedKeys.attack && this.frameIndex % 3 === 0){
+            this.shoot()
+        }
 
         this.animateSprite(frameCounter);
     }
@@ -147,19 +163,20 @@ class Player {
     }
 
     shoot() {
-			this.bullets.push(
-				new Bullet(
-					this.ctx,
-					this.width,
-					this.height,
-					this.x,
-					this.y,
-					this.y0,
-					this.canvasW,
-					this.canvasH,
-                    this.lastKey
-				)
-			);
+
+            const newBullet = new Bullet(
+                this.ctx,
+                this.width,
+                this.height,
+                this.x,
+                this.y,
+                this.y0,
+                this.canvasW,
+                this.canvasH,
+                this.lastKey
+        );
+        
+        this.bullets.push(newBullet)
 
     }
 
