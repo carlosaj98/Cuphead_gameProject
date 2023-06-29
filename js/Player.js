@@ -40,9 +40,8 @@ class Player {
     }
 
     setControls() {
-        addEventListener("mousedown", () => {
-            this.pressedKeys.attack = true
-        })
+        addEventListener("mousedown", () => this.pressedKeys.attack = true)
+
         addEventListener("mouseup", () => this.pressedKeys.attack = false)
 
         addEventListener("keydown", (event) => {
@@ -106,7 +105,7 @@ class Player {
             } else if (this.pressedKeys.jump || this.y < this.y0) {
                 this.img.src = "assets/character/Character_jump_L.png";
                 this.img.frameCount = 8;
-                this.frameSpeed = 3;
+                this.frameSpeed = 1;
             }else if (this.pressedKeys.attack){
                 this.img.src = "assets/character/Character_attack_L.png";
                 this.img.frameCount = 3;
@@ -146,10 +145,6 @@ class Player {
         this.bullets = this.bullets.filter(
             (bullet) => (bullet.x - bullet.radius > 0)
         );
-        
-        if(this.pressedKeys.attack && this.frameIndex % 3 === 0){
-            this.shoot()
-        }
 
         this.animateSprite(frameCounter);
     }
@@ -159,7 +154,12 @@ class Player {
             this.frameIndex++;
         }
 
-        if (this.frameIndex >= this.img.frameCount) this.frameIndex = 0;
+        if (this.frameIndex >= this.img.frameCount){
+            if(this.pressedKeys.attack){
+                this.shoot()
+            }
+            this.frameIndex = 0;
+        } 
     }
 
     shoot() {
