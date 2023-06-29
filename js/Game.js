@@ -57,10 +57,35 @@ const Game = {
             
             this.waterFront.draw(this.frameCounter)
 
-            
+            if (this.isCollision()) {
+				this.gameover()
+			}
 
         }, 1000 / this.fps)
     },
+
+    stop: function(){
+        this.reset()
+		clearInterval(this.intervalId)
+    },
+
+    gameover() {
+		clearInterval(this.intervalId)
+
+		if (confirm('Quieres jugar de nuevo')) {
+			this.start()
+		}
+	},
+
+    isCollision() {
+		return this.boss.meteors.some(
+			(meteor) =>
+				meteor.x < this.player.x + this.player.width - 50 &&
+				meteor.x + meteor.width -50 > this.player.x &&
+				meteor.y + meteor.height  -50 > this.player.y &&
+				meteor.y < this.player.y + this.player.height -50
+		)
+	},
 
     clearCanvas() {
 		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)

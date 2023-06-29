@@ -66,7 +66,7 @@ class Meteor {
 		this.y += this.vy
 
 		if (this.y + this.vy > this.floor) {
-            this.vx -= 2
+            this.vx -= 3
 			this.vy *= -1
             
 		}

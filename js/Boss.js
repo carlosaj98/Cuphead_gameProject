@@ -28,13 +28,13 @@ class Boss {
         this.meteors = [];
 
         this.isAttacking = false;
-        this.setControls();
+        this.intervalMeteors();
     }
 
-    setControls() {
+    intervalMeteors() {
         setInterval(() => {
             this.isAttacking = true
-            this.shoot()
+            // this.shoot()
             this.frameIndex = 0
         }, 1500);
 
@@ -90,13 +90,13 @@ class Boss {
             this.frameIndex++;
             
         }
-
         if (this.frameIndex >= this.img.frameCount){
+            this.shoot()
            if(this.isAttacking) this.isAttacking = false
-       
            this.frameIndex = 0;
         } 
-        
+
+
     }
 
     shoot() {
