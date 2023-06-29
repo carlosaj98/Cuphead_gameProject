@@ -1,29 +1,55 @@
+import Meteor from "./Meteor.js";
+
 class Boss {
     constructor(ctx, canvasW, canvasH, keys) {
-        this.ctx = ctx
-        this.keys = keys
+        this.ctx = ctx;
+        this.keys = keys;
 
-        this.canvasW = canvasW
-        this.canvasH = canvasH
+        this.canvasW = canvasW;
+        this.canvasH = canvasH;
 
-        this.x = canvasW * 0.7
+        this.x = canvasW * 0.7;
 
-        this.y0 = canvasH -700
-        this.y = this.y0
+        this.y0 = canvasH - 700;
+        this.y = this.y0;
 
-        this.vy = 0
+        this.vy = 0;
 
-        this.img = new Image()
-        this.img.src = "assets/boss/Boss1_idle.png"
+        this.img = new Image();
+        this.img.src = "assets/boss/Boss1_idle.png";
 
-        this.img.frameCount = 16
-        this.frameIndex = 0
+        this.img.frameCount = 16;
+        this.frameSpeed = 5;
+        this.frameIndex = 0;
 
-        this.width = 600
-        this.height = 800
+        this.width = 600;
+        this.height = 800;
 
-        this.bullets = []
+        this.meteors = [];
+
+        this.isAttacking = false;
+        this.setControls();
     }
+
+    setControls() {
+        setInterval(() => {
+            this.isAttacking = !this.isAttacking
+            console.log(this.isAttacking)
+            if(this.isAttacking){
+                this.img.src = "assets/boss/Boss1_attack.png"
+                this.img.frameCount = 7;
+                this.frameSpeed = 4;
+                this.shoot()
+                
+            }else if(this.isAttacking === false){
+                this.img.src = "assets/boss/Boss1_idle.png"; 
+                this.img.frameCount = 16;
+                this.frameSpeed = 5;
+            }
+        }, 1000);
+
+    }
+
     draw(frameCounter) {
         // Pintamos un cada frame del sprite en función del frameIndex
         this.ctx.drawImage(
@@ -37,16 +63,39 @@ class Boss {
             this.y,
             this.width,
             this.height
-        )
-        this.animateSprite(frameCounter)
+        );
+        this.meteors.forEach((meteor) => {
+            meteor.draw();
+            meteor.move();
+        });
+        this.meteors = this.meteors.filter(
+            (bullet) => bullet.x + bullet.width > 0
+        );
+
+        this.animateSprite(frameCounter);
     }
     animateSprite(frameCounter) {
-		if (frameCounter % 5 === 0) {
-			this.frameIndex++
-		}
+        if (frameCounter % this.frameSpeed === 0) {
+            this.frameIndex++;
+        }
 
-		if (this.frameIndex >= this.img.frameCount) this.frameIndex = 0
-	}
+        if (this.frameIndex >= this.img.frameCount) this.frameIndex = 0;
+    }
+
+    shoot() {
+        this.meteors.push(
+            new Meteor(
+                this.ctx,
+                this.width,
+                this.height,
+                this.x,
+                this.y,
+                this.y0,
+                this.canvasW,
+                this.canvasH
+            )
+        );
+    }
 }
 
-export default Boss
+export default Boss;

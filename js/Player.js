@@ -105,7 +105,7 @@ class Player {
             } else if (this.pressedKeys.jump || this.y < this.y0) {
                 this.img.src = "assets/character/Character_jump_L.png";
                 this.img.frameCount = 8;
-                this.frameSpeed = 1;
+                this.frameSpeed = 3;
             }else if (this.pressedKeys.attack){
                 this.img.src = "assets/character/Character_attack_L.png";
                 this.img.frameCount = 3;
