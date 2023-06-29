@@ -183,7 +183,7 @@ class Player {
     move() {
         if (
             this.x + this.vx < 0 ||
-            this.x + this.width + this.vx >= this.canvasW - 320
+            this.x + this.width + this.vx >= this.canvasW - 350
         ) {
             this.vx = 0;
         }

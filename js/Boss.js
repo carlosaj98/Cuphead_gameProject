@@ -33,25 +33,35 @@ class Boss {
 
     setControls() {
         setInterval(() => {
-            this.isAttacking = !this.isAttacking
-            console.log(this.isAttacking)
-            if(this.isAttacking){
-                this.img.src = "assets/boss/Boss1_attack.png"
-                this.img.frameCount = 7;
-                this.frameSpeed = 4;
-                this.shoot()
-                
-            }else if(this.isAttacking === false){
-                this.img.src = "assets/boss/Boss1_idle.png"; 
-                this.img.frameCount = 16;
-                this.frameSpeed = 5;
-            }
-        }, 1000);
+            this.isAttacking = true
+            this.shoot()
+            this.frameIndex = 0
+        }, 1500);
 
     }
 
     draw(frameCounter) {
         // Pintamos un cada frame del sprite en función del frameIndex
+
+        
+ 
+        if(this.isAttacking){
+            this.img.src = "assets/boss/Boss1_attack.png"
+            this.img.frameCount = 7;
+            this.frameSpeed = 4;
+           
+
+        } else{
+            this.img.src = "assets/boss/Boss1_idle.png"; 
+            this.img.frameCount = 16;
+            this.frameSpeed = 5;
+          
+        }
+
+
+
+
+
         this.ctx.drawImage(
             this.img,
             (this.img.width / this.img.frameCount) * this.frameIndex,
@@ -76,10 +86,17 @@ class Boss {
     }
     animateSprite(frameCounter) {
         if (frameCounter % this.frameSpeed === 0) {
+          
             this.frameIndex++;
+            
         }
 
-        if (this.frameIndex >= this.img.frameCount) this.frameIndex = 0;
+        if (this.frameIndex >= this.img.frameCount){
+           if(this.isAttacking) this.isAttacking = false
+       
+           this.frameIndex = 0;
+        } 
+        
     }
 
     shoot() {

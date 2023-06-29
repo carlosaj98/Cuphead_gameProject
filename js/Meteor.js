@@ -19,8 +19,8 @@ class Meteor {
         this.floor = 550
         this.x = this.bossX -50
         this.y = bossY + bossH / 5
-        this.vx = Math.floor(Math.random()*(-20 - -5)+ -5)
-        this.vy = Math.floor(Math.random()*(20 - 10)+ 10)
+        this.vx = Math.floor(Math.random()*(-15 - -2)+ -2)
+        this.vy = Math.floor(Math.random()*(20 - 5)+ 5)
 
         this.img = new Image()
         this.img.src = "assets/boss/Boss1_proyectile.png"
@@ -53,11 +53,22 @@ class Meteor {
 	}
 
     move() {
+
+     
+        this.ay = 0.5
+
+     
+
+        this.vy += this.ay
+
+
 		this.x += this.vx
 		this.y += this.vy
 
-		if (this.y > this.floor || this.y < this.bossY0) {
+		if (this.y + this.vy > this.floor) {
+            this.vx -= 2
 			this.vy *= -1
+            
 		}
 	}
 
