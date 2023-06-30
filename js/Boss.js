@@ -31,7 +31,9 @@ class Boss {
 
         this.isAttacking = false;
 
-
+        this.meteorAudio = new Audio('../assets/sounds/meteor_sound.mp3')
+		this.meteorAudio.volume = 0.5
+        this.meteorAudio.playbackRate = 3
         this.intervalMeteors();
     }
 
@@ -39,6 +41,7 @@ class Boss {
         this.intervalMeteor = setInterval(() => {
             this.isAttacking = true
             this.shoot()
+            
             this.frameIndex = 0
         }, 1000);
         
@@ -46,22 +49,24 @@ class Boss {
 
     }
 
-    // healthSystem(){
-    //     if(this.health <= 90){
-    //         this.x +=50
-    //     }
-    // }
+    healthSystem(){
+        if(this.health <= 80){
+            this.x +=5
+            clearInterval(this.intervalMeteor)
+        }
+    }
 
     draw(frameCounter) {
         // Pintamos un cada frame del sprite en función del frameIndex
 
-        // if(this.health < 100) clearInterval(this.intervalMeteor)
+        this.healthSystem()
         
  
         if(this.isAttacking){
             this.img.src = "assets/boss/Boss1_attack.png"
             this.img.frameCount = 7;
             this.frameSpeed = 4;
+            this.meteorAudio.play()
            
 
         } else{

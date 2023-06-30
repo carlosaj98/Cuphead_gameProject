@@ -42,7 +42,7 @@ const Game = {
         this.boss = new Boss(this.ctx, this.canvasW, this.canvasH, this.keys);
 
         this.ostMusic = new Audio('../assets/sounds/ost_music.mp3')
-        this.ostMusic.volume = 0.25
+        this.ostMusic.volume = 0.15
         this.ostMusic.play()
 
 
