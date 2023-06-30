@@ -27,6 +27,8 @@ class Boss {
 
         this.meteors = [];
 
+        // this.health = 100
+
         this.isAttacking = false;
         this.intervalMeteors();
     }
@@ -34,11 +36,17 @@ class Boss {
     intervalMeteors() {
         setInterval(() => {
             this.isAttacking = true
-            // this.shoot()
+            this.shoot()
             this.frameIndex = 0
         }, 1500);
 
     }
+
+    // healthSystem(){
+    //     if(this.health <= 90){
+    //         this.x +=50
+    //     }
+    // }
 
     draw(frameCounter) {
         // Pintamos un cada frame del sprite en función del frameIndex
@@ -83,6 +91,7 @@ class Boss {
         );
 
         this.animateSprite(frameCounter);
+        console.log(this.health)
     }
     animateSprite(frameCounter) {
         if (frameCounter % this.frameSpeed === 0) {
@@ -91,7 +100,7 @@ class Boss {
             
         }
         if (this.frameIndex >= this.img.frameCount){
-            this.shoot()
+            
            if(this.isAttacking) this.isAttacking = false
            this.frameIndex = 0;
         } 

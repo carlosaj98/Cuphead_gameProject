@@ -60,6 +60,11 @@ const Game = {
             if (this.isCollision()) {
 				this.gameover()
 			}
+            if(this.isBulletColl()){
+                this.player.bullets.splice(0,1)
+                // this.boss.health -= 1
+                // this.boss.healthSystem()
+            }
 
         }, 1000 / this.fps)
     },
@@ -80,12 +85,20 @@ const Game = {
     isCollision() {
 		return this.boss.meteors.some(
 			(meteor) =>
-				meteor.x < this.player.x + this.player.width - 50 &&
-				meteor.x + meteor.width -50 > this.player.x &&
-				meteor.y + meteor.height  -50 > this.player.y &&
-				meteor.y < this.player.y + this.player.height -50
+				meteor.x < this.player.x + this.player.width - 100 &&
+				meteor.x + meteor.width - 100 > this.player.x &&
+				meteor.y + meteor.height  - 100 > this.player.y &&
+				meteor.y < this.player.y + this.player.height - 100
 		)
 	},
+
+    isBulletColl(){
+         return this.player.bullets.some(
+			(bullet) =>
+				bullet.x + bullet.width > this.boss.x + 200 &&
+                bullet.x < this.boss.x + this.boss.width - 200
+		)
+    },
 
     clearCanvas() {
 		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)
