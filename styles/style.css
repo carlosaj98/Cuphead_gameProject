@@ -13,7 +13,16 @@ body{
     align-items: center;
 
 }
+.hidden {
+    display: none;
+}
 
+.container {
+    text-align: center;
+}
+h1 {
+    margin-bottom: 2rem;
+}
 canvas{
     background-color: aqua;
 }

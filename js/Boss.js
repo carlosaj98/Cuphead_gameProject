@@ -30,15 +30,19 @@ class Boss {
         this.health = 100
 
         this.isAttacking = false;
+
+
         this.intervalMeteors();
     }
 
     intervalMeteors() {
-        setInterval(() => {
+        this.intervalMeteor = setInterval(() => {
             this.isAttacking = true
             this.shoot()
             this.frameIndex = 0
-        }, 1500);
+        }, 1000);
+        
+        
 
     }
 
@@ -51,6 +55,7 @@ class Boss {
     draw(frameCounter) {
         // Pintamos un cada frame del sprite en función del frameIndex
 
+        // if(this.health < 100) clearInterval(this.intervalMeteor)
         
  
         if(this.isAttacking){

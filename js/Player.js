@@ -36,6 +36,14 @@ class Player {
             left: false,
         };
 
+        this.jumpAudio = new Audio('../assets/sounds/jump_sound.wav')
+		this.jumpAudio.volume = 0.5
+        
+
+        this.bulletAudio = new Audio('../assets/sounds/shoot_sound.wav')
+		this.bulletAudio.volume = 0.5
+        this.bulletAudio.playbackRate = 2
+
         this.setControls();
     }
 
@@ -49,6 +57,7 @@ class Player {
                 case this.keys.JUMP:
                     if (this.y === this.y0) this.vy = -25;
                     this.pressedKeys.jump = true;
+                    this.jumpAudio.play()
                     break;
                 case this.keys.RIGHT:
                     this.pressedKeys.right = true;
@@ -156,7 +165,9 @@ class Player {
 
         if (this.frameIndex >= this.img.frameCount){
             if(this.pressedKeys.attack){
+                
                 this.shoot()
+                this.bulletAudio.play()
             }
             this.frameIndex = 0;
         } 
