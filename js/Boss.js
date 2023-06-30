@@ -27,7 +27,7 @@ class Boss {
 
         this.meteors = [];
 
-        // this.health = 100
+        this.health = 100
 
         this.isAttacking = false;
         this.intervalMeteors();

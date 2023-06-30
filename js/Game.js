@@ -62,7 +62,7 @@ const Game = {
 			}
             if(this.isBulletColl()){
                 this.player.bullets.splice(0,1)
-                // this.boss.health -= 1
+                this.boss.health -= 1
                 // this.boss.healthSystem()
             }
 
