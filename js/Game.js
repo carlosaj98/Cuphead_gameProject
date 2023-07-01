@@ -83,7 +83,7 @@ const Game = {
             }
             if (this.isBulletColl()) {
                 this.hitAudio = new Audio('../assets/sounds/hitBullet_audio.mp3')
-                this.hitAudio.volume = 0.15
+                this.hitAudio.volume = 0.1
                 this.hitAudio.playbackRate = 1
                 this.hitAudio.play()
 

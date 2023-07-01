@@ -19,7 +19,7 @@ class Fire {
         this.floor = 550
         this.x = this.bossX + this.bossW - 100
         this.y = bossY + bossH - 250
-        this.vx = 10
+        this.vx = Math.floor(Math.random()*(15 - 5)+ 5)
 
         this.img = new Image()
         this.img.src = "assets/boss/Boss2_proyectile.png"
@@ -29,7 +29,7 @@ class Fire {
         
         this.width = 300
         this.height = 150
-
+        
         this.frameCounter = 0
     }
 

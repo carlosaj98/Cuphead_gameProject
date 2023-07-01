@@ -36,6 +36,10 @@ class Boss {
         this.meteorAudio = new Audio('../assets/sounds/meteor_sound.mp3')
 		this.meteorAudio.volume = 0.5
         this.meteorAudio.playbackRate = 3
+
+        this.fireAudio = new Audio('../assets/sounds/fire_sound.mp3')
+		this.fireAudio.volume = 0.5
+        this.fireAudio.playbackRate = 1
         this.intervalMeteors();
         this.intervalFires()
     }
@@ -54,7 +58,6 @@ class Boss {
         this.intervalFire = setInterval(() => {
             this.isAttacking = true
             this.shootFire()
-            
             this.frameIndex = 0
         }, 1500); 
     }
@@ -123,17 +126,20 @@ class Boss {
             this.frameSpeed = 6;
             this.x = this.canvasW * -0.15
             this.y = this.canvasH - 775;
-        }, 2000);
+            if(this.isAttacking && this.fires.length >= 1) this.fireAudio.play()
 
+        }, 2000);
         this.fires.forEach((fire) => {
             fire.draw();
+            
             fire.move();
         });
         this.fires = this.fires.filter(
             (fire) => fire.x + fire.width > 0
         );
-
         this.animateSprite(frameCounter);
+
+
     }
 
     animateSprite(frameCounter) {
