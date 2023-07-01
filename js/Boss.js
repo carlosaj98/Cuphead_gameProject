@@ -1,4 +1,5 @@
 import Meteor from "./Meteor.js";
+import Fire from "./Fire.js";
 
 class Boss {
     constructor(ctx, canvasW, canvasH, keys) {
@@ -26,6 +27,7 @@ class Boss {
         this.height = 800;
 
         this.meteors = [];
+        this.fires = []
 
         this.health = 100
 
@@ -35,6 +37,7 @@ class Boss {
 		this.meteorAudio.volume = 0.5
         this.meteorAudio.playbackRate = 3
         this.intervalMeteors();
+        this.intervalFires()
     }
 
     intervalMeteors() {
@@ -45,13 +48,23 @@ class Boss {
             this.frameIndex = 0
         }, 1000);
         
-        
+    }
 
+    intervalFires(){
+        this.intervalFire = setInterval(() => {
+            this.isAttacking = true
+            this.shootFire()
+            
+            this.frameIndex = 0
+        }, 1500); 
     }
 
     healthSystem(){
         if(this.health <= 80){
             this.x +=5
+            if(this.x < this.canvasW){
+                this.drawPhase2()
+            }
             clearInterval(this.intervalMeteor)
         }
     }
@@ -61,23 +74,21 @@ class Boss {
 
         this.healthSystem()
         
- 
-        if(this.isAttacking){
-            this.img.src = "assets/boss/Boss1_attack.png"
-            this.img.frameCount = 7;
-            this.frameSpeed = 4;
-            this.meteorAudio.play()
-           
-
-        } else{
-            this.img.src = "assets/boss/Boss1_idle.png"; 
-            this.img.frameCount = 16;
-            this.frameSpeed = 5;
-          
+        if(this.health > 80){
+            if(this.isAttacking){
+                this.img.src = "assets/boss/Boss1_attack.png"
+                this.img.frameCount = 7;
+                this.frameSpeed = 4;
+                this.meteorAudio.play()
+               
+    
+            } else{
+                this.img.src = "assets/boss/Boss1_idle.png"; 
+                this.img.frameCount = 16;
+                this.frameSpeed = 5;
+              
+            }
         }
-
-
-
 
 
         this.ctx.drawImage(
@@ -103,6 +114,28 @@ class Boss {
         this.animateSprite(frameCounter);
         console.log(this.health)
     }
+
+    drawPhase2(frameCounter){
+
+        setTimeout(() => {
+            this.img.src = "assets/boss/Boss2_idle.png"; 
+            this.img.frameCount = 14;
+            this.frameSpeed = 6;
+            this.x = this.canvasW * -0.15
+            this.y = this.canvasH - 775;
+        }, 2000);
+
+        this.fires.forEach((fire) => {
+            fire.draw();
+            fire.move();
+        });
+        this.fires = this.fires.filter(
+            (fire) => fire.x + fire.width > 0
+        );
+
+        this.animateSprite(frameCounter);
+    }
+
     animateSprite(frameCounter) {
         if (frameCounter % this.frameSpeed === 0) {
           
@@ -121,6 +154,21 @@ class Boss {
     shoot() {
         this.meteors.push(
             new Meteor(
+                this.ctx,
+                this.width,
+                this.height,
+                this.x,
+                this.y,
+                this.y0,
+                this.canvasW,
+                this.canvasH
+            )
+        );
+    }
+
+    shootFire() {
+        this.fires.push(
+            new Fire(
                 this.ctx,
                 this.width,
                 this.height,

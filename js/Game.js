@@ -67,9 +67,18 @@ const Game = {
 
             this.boss.draw(this.frameCounter);
 
+            if(this.boss.health < 80){
+                this.boss.drawPhase2(this.frameCounter);
+
+            }
+
             this.waterFront.draw(this.frameCounter);
 
             if (this.isCollision()) {
+                this.gameover();
+            }
+
+            if (this.isFireColl()) {
                 this.gameover();
             }
             if (this.isBulletColl()) {
@@ -107,6 +116,16 @@ const Game = {
                 meteor.x + meteor.width - 100 > this.player.x &&
                 meteor.y + meteor.height - 100 > this.player.y &&
                 meteor.y < this.player.y + this.player.height - 100
+        );
+    },
+
+    isFireColl() {
+        return this.boss.fires.some(
+            (fire) =>
+                fire.x < this.player.x + this.player.width - 100 &&
+                fire.x + fire.width - 100 > this.player.x &&
+                fire.y + fire.height - 100 > this.player.y &&
+                fire.y < this.player.y + this.player.height - 100
         );
     },
 
