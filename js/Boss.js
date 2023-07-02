@@ -132,7 +132,6 @@ class Boss {
         );
 
         this.animateSprite(frameCounter);
-        console.log(this.health)
     }
 
     drawPhase2(frameCounter){
