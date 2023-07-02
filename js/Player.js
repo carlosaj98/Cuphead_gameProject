@@ -1,7 +1,7 @@
 import Bullet from "./Bullet.js";
 
 class Player {
-    constructor(ctx, canvasW, canvasH, keys) {
+    constructor(ctx, canvasW, canvasH, keys,) {
         this.ctx = ctx;
         this.keys = keys;
 
@@ -27,6 +27,9 @@ class Player {
         this.height = 150;
 
         this.bullets = [];
+        this.isAlive = true
+        this.phaseBoss = false
+        this.reloadScreen = false
 
         this.lastKey = "right";
         this.pressedKeys = {
@@ -48,46 +51,59 @@ class Player {
     }
 
     setControls() {
-        addEventListener("mousedown", () => this.pressedKeys.attack = true)
+        addEventListener("mousedown", () =>{
+            if(this.isAlive) this.pressedKeys.attack = true
+            
+        } )
 
-        addEventListener("mouseup", () => this.pressedKeys.attack = false)
+        addEventListener("mouseup", () =>{
+            if(this.isAlive) this.pressedKeys.attack = false
+        })
 
         addEventListener("keydown", (event) => {
-            switch (event.code) {
-                case this.keys.JUMP:
-                    if (this.y === this.y0) this.vy = -25;
-                    this.pressedKeys.jump = true;
-                    this.jumpAudio.play()
-                    break;
-                case this.keys.RIGHT:
-                    this.pressedKeys.right = true;
-                    this.lastKey = "right";
-                    break;
-                case this.keys.LEFT:
-                    this.pressedKeys.left = true;
-                    this.lastKey = "left";
-                    break;
+            if(this.isAlive){
+                switch (event.code) {
+                    case this.keys.JUMP:
+                        if (this.y === this.y0) this.vy = -25;
+                        this.pressedKeys.jump = true;
+                        this.jumpAudio.play()
+                        break;
+                    case this.keys.RIGHT:
+                        this.pressedKeys.right = true;
+                        this.lastKey = "right";
+                        break;
+                    case this.keys.LEFT:
+                        this.pressedKeys.left = true;
+                        this.lastKey = "left";
+                        break;
+                }
             }
+
         });
 
         addEventListener("keyup", (event) => {
-            switch (event.code) {
-                case this.keys.JUMP:
-                    this.pressedKeys.jump = false;
-                    break;
-                case this.keys.RIGHT:
-                    this.pressedKeys.right = false;
-                    break;
-                case this.keys.LEFT:
-                    this.pressedKeys.left = false;
-                    break;
+            if(this.isAlive){
+                switch (event.code) {
+                    case this.keys.JUMP:
+                        this.pressedKeys.jump = false;
+                        break;
+                    case this.keys.RIGHT:
+                        this.pressedKeys.right = false;
+                        break;
+                    case this.keys.LEFT:
+                        this.pressedKeys.left = false;
+                        break;
+                }
             }
+
         });
     }
 
     directionSprites() {
         // Pintamos un cada frame del sprite en función del frameIndex
-        if (this.lastKey === "right") {
+
+
+        if (this.isAlive === true && this.lastKey === "right") {
             if (this.pressedKeys.right && this.y >= this.y0) {
                 this.img.src = "assets/character/Character_run.png";
                 this.img.frameCount = 16;
@@ -106,7 +122,7 @@ class Player {
                 this.img.frameCount = 5;
                 this.frameSpeed = 6;
             }
-        } else {
+        } else if(this.isAlive === true && this.lastKey === "left"){
             if (this.pressedKeys.left && this.y >= this.y0) {
                 this.img.src = "assets/character/Character_run_L.png";
                 this.img.frameCount = 16;
@@ -124,6 +140,10 @@ class Player {
                 this.img.frameCount = 5;
                 this.frameSpeed = 6;
             }
+        }else{
+            this.img.src = "assets/character/Character_death.png";
+            this.img.frameCount = 24;
+            this.frameSpeed = 3;
         }
     }
 
@@ -192,12 +212,24 @@ class Player {
     }
 
     move() {
-        if (
-            this.x + this.vx < 0 ||
-            this.x + this.width + this.vx >= this.canvasW - 350
-        ) {
-            this.vx = 0;
+        if(this.phaseBoss === true){
+            
+            if (
+                this.x + this.vx < 0 ||
+                this.x + this.width + this.vx >= this.canvasW
+            ) {
+                this.vx = 0;
+            }
         }
+        if(this.phaseBoss === false){
+            if (
+                this.x + this.vx < 0 ||
+                this.x + this.width + this.vx >= this.canvasW - 350 
+            ) {
+                this.vx = 0;
+            }
+        }
+
 
         this.gravity = 0.95;
         this.vy += this.gravity;
@@ -223,6 +255,11 @@ class Player {
         if (this.y >= this.y0) {
             this.vy = 0;
             this.y = this.y0;
+        }
+
+        if(this.isAlive === false){
+            this.vx = 0
+            this.vy = -10
         }
     }
 }

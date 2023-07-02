@@ -62,6 +62,11 @@ class Boss {
         }, 1500); 
     }
 
+    stopAttacks(){
+        clearInterval(this.intervalMeteor)
+        clearInterval(this.intervalFire)
+    }
+
     healthSystem(){
         if(this.health <= 80){
             this.x +=5

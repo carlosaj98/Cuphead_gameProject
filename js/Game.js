@@ -35,7 +35,7 @@ const Game = {
             this.ctx,
             this.canvasW,
             this.canvasH,
-            this.keys
+            this.keys,
         );
         this.waterFront = new WaterFront(this.ctx, this.canvasW, this.canvasH);
         this.waterBack = new WaterBack(this.ctx, this.canvasW, this.canvasH);
@@ -55,7 +55,7 @@ const Game = {
             this.clearCanvas();
 
             this.frameCounter++;
-
+            
             this.background.draw();
 
             this.waterBack.draw(this.frameCounter);
@@ -64,10 +64,12 @@ const Game = {
 
             this.player.draw(this.frameCounter);
             this.player.move();
+            if(this.player.reloadScreen === true)console.log("hola")
 
             this.boss.draw(this.frameCounter);
 
             if(this.boss.health < 80){
+                this.player.phaseBoss = true
                 this.boss.drawPhase2(this.frameCounter);
 
             }
@@ -75,6 +77,7 @@ const Game = {
             this.waterFront.draw(this.frameCounter);
 
             if (this.isCollision()) {
+                
                 this.gameover();
             }
 
@@ -101,15 +104,22 @@ const Game = {
 
     gameover() {
         clearInterval(this.intervalId);
-
+        this.player.isAlive = false
         this.ostMusic.pause()
-
+        this.boss.meteorAudio.pause()
+        this.boss.fireAudio.pause()
+        
         if (confirm("Quieres jugar de nuevo")) {
+
             this.start();
+            
         }
+
+
     },
 
     isCollision() {
+        
         return this.boss.meteors.some(
             (meteor) =>
                 meteor.x < this.player.x + this.player.width - 100 &&
