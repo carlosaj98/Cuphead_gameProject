@@ -39,11 +39,11 @@ class Player {
             left: false,
         };
 
-        this.jumpAudio = new Audio('../assets/sounds/jump_sound.wav')
+        this.jumpAudio = new Audio('assets/sounds/jump_sound.wav')
 		this.jumpAudio.volume = 0.2
         
 
-        this.bulletAudio = new Audio('../assets/sounds/shoot_sound.wav')
+        this.bulletAudio = new Audio('assets/sounds/shoot_sound.wav')
 		this.bulletAudio.volume = 0.25
         this.bulletAudio.playbackRate = 2
 

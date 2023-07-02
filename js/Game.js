@@ -41,7 +41,7 @@ const Game = {
         this.waterBack = new WaterBack(this.ctx, this.canvasW, this.canvasH);
         this.boss = new Boss(this.ctx, this.canvasW, this.canvasH, this.keys);
 
-        this.ostMusic = new Audio('../assets/sounds/ost_music.mp3')
+        this.ostMusic = new Audio('assets/sounds/ost_music.mp3')
         this.ostMusic.volume = 0.15
         this.ostMusic.play()
 
@@ -87,7 +87,7 @@ const Game = {
                 this.gameover();
             }
             if (this.isBulletColl()) {
-                this.hitAudio = new Audio('../assets/sounds/hitBullet_audio.mp3')
+                this.hitAudio = new Audio('assets/sounds/hitBullet_audio.mp3')
                 this.hitAudio.volume = 0.1
                 this.hitAudio.playbackRate = 1
                 this.hitAudio.play()

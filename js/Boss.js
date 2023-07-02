@@ -34,11 +34,11 @@ class Boss {
 
         this.isAttacking = false;
 
-        this.meteorAudio = new Audio('../assets/sounds/meteor_sound.mp3')
+        this.meteorAudio = new Audio('assets/sounds/meteor_sound.mp3')
 		this.meteorAudio.volume = 0.5
         this.meteorAudio.playbackRate = 3
 
-        this.fireAudio = new Audio('../assets/sounds/fire_sound.mp3')
+        this.fireAudio = new Audio('assets/sounds/fire_sound.mp3')
 		this.fireAudio.volume = 0.5
         this.fireAudio.playbackRate = 1
         this.intervalMeteors();
