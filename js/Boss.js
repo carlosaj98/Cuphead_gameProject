@@ -15,6 +15,7 @@ class Boss {
         this.y = this.y0;
 
         this.vy = 0;
+        this.vx = 0
 
         this.img = new Image();
         this.img.src = "assets/boss/Boss1_idle.png";
@@ -68,12 +69,23 @@ class Boss {
     }
 
     healthSystem(){
-        if(this.health <= 80){
-            this.x +=5
+        if(this.health <= 50){
+            this.vx = 5
+            this.x += this.vx
             if(this.x < this.canvasW){
+                this.vx = 0
+                this.x += this.vx
                 this.drawPhase2()
             }
+
             clearInterval(this.intervalMeteor)
+        }
+        if(this.health <= 0){
+            setTimeout(() => {
+                this.x = -3000
+            }, 1500);
+            
+            clearInterval(this.intervalFire)
         }
     }
 
@@ -82,7 +94,7 @@ class Boss {
 
         this.healthSystem()
         
-        if(this.health > 80){
+        if(this.health >= 50){
             if(this.isAttacking){
                 this.img.src = "assets/boss/Boss1_attack.png"
                 this.img.frameCount = 7;
@@ -132,6 +144,12 @@ class Boss {
             this.x = this.canvasW * -0.15
             this.y = this.canvasH - 775;
             if(this.isAttacking && this.fires.length >= 1) this.fireAudio.play()
+            
+            if(this.health <= 0){
+                this.img.src = "assets/boss/Boss_death.png"; 
+                this.img.frameCount = 8;
+                this.frameSpeed = 6;
+            }
 
         }, 2000);
         this.fires.forEach((fire) => {

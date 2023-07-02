@@ -29,7 +29,7 @@ class Player {
         this.bullets = [];
         this.isAlive = true
         this.phaseBoss = false
-        this.reloadScreen = false
+        this.bossDead = false
 
         this.lastKey = "right";
         this.pressedKeys = {
@@ -143,6 +143,12 @@ class Player {
         }else{
             this.img.src = "assets/character/Character_death.png";
             this.img.frameCount = 24;
+            this.frameSpeed = 3;
+        }
+
+        if(this.bossDead){
+            this.img.src = "assets/character/Character_win.png";
+            this.img.frameCount = 12;
             this.frameSpeed = 3;
         }
     }

@@ -64,14 +64,16 @@ const Game = {
 
             this.player.draw(this.frameCounter);
             this.player.move();
-            if(this.player.reloadScreen === true)console.log("hola")
 
             this.boss.draw(this.frameCounter);
 
-            if(this.boss.health < 80){
+            if(this.boss.health <= 50){
                 this.player.phaseBoss = true
                 this.boss.drawPhase2(this.frameCounter);
 
+            }
+            if(this.boss.health <= 0){
+                this.player.bossDead = true
             }
 
             this.waterFront.draw(this.frameCounter);
