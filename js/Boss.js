@@ -47,19 +47,25 @@ class Boss {
 
     intervalMeteors() {
         this.intervalMeteor = setInterval(() => {
-            this.isAttacking = true
-            this.shoot()
-            
-            this.frameIndex = 0
+            if(this.health>50){
+                this.isAttacking = true
+                this.shoot()
+                
+                this.frameIndex = 0
+            }
+
         }, 1000);
         
     }
 
     intervalFires(){
         this.intervalFire = setInterval(() => {
-            this.isAttacking = true
-            this.shootFire()
-            this.frameIndex = 0
+            if(this.health < 50){
+                this.isAttacking = true
+                this.shootFire()
+                this.frameIndex = 0
+            }
+
         }, 1500); 
     }
 
@@ -77,7 +83,6 @@ class Boss {
                 this.x += this.vx
                 this.drawPhase2()
             }
-
             clearInterval(this.intervalMeteor)
         }
         if(this.health <= 0){
@@ -135,7 +140,7 @@ class Boss {
     }
 
     drawPhase2(frameCounter){
-
+        
         setTimeout(() => {
             this.img.src = "assets/boss/Boss2_idle.png"; 
             this.img.frameCount = 14;
