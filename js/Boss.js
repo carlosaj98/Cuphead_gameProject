@@ -75,7 +75,7 @@ class Boss {
     }
 
     healthSystem(){
-        if(this.health <= 50){
+        if(this.health <= 50 && this.health > 0){
             this.vx = 5
             this.x += this.vx
             if(this.x < this.canvasW){
@@ -85,11 +85,10 @@ class Boss {
             }
             clearInterval(this.intervalMeteor)
         }
+        
         if(this.health <= 0){
-            setTimeout(() => {
-                this.x = -3000
-            }, 1500);
-            
+            this.vx = 5
+            this.x += this.vx
             clearInterval(this.intervalFire)
         }
     }
@@ -133,7 +132,7 @@ class Boss {
             meteor.move();
         });
         this.meteors = this.meteors.filter(
-            (bullet) => bullet.x + bullet.width > 0
+            (meteor) => meteor.x + meteor.width > 0
         );
 
         this.animateSprite(frameCounter);
@@ -142,12 +141,16 @@ class Boss {
     drawPhase2(frameCounter){
         
         setTimeout(() => {
-            this.img.src = "assets/boss/Boss2_idle.png"; 
-            this.img.frameCount = 14;
-            this.frameSpeed = 6;
             this.x = this.canvasW * -0.15
             this.y = this.canvasH - 775;
-            if(this.isAttacking && this.fires.length >= 1) this.fireAudio.play()
+            if(this.health > 0){
+                this.img.src = "assets/boss/Boss2_idle.png"; 
+                this.img.frameCount = 14;
+                this.frameSpeed = 6;
+
+                if(this.isAttacking) this.fireAudio.play()
+            }
+
             
             if(this.health <= 0){
                 this.img.src = "assets/boss/Boss_death.png"; 

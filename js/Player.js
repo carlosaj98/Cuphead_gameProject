@@ -52,16 +52,16 @@ class Player {
 
     setControls() {
         addEventListener("mousedown", () =>{
-            if(this.isAlive) this.pressedKeys.attack = true
+            if(this.isAlive && !this.bossDead) this.pressedKeys.attack = true
             
         } )
 
         addEventListener("mouseup", () =>{
-            if(this.isAlive) this.pressedKeys.attack = false
+            if(this.isAlive && !this.bossDead) this.pressedKeys.attack = false
         })
 
         addEventListener("keydown", (event) => {
-            if(this.isAlive){
+            if(this.isAlive && !this.bossDead){
                 switch (event.code) {
                     case this.keys.JUMP:
                         if (this.y === this.y0) this.vy = -25;
@@ -82,7 +82,7 @@ class Player {
         });
 
         addEventListener("keyup", (event) => {
-            if(this.isAlive){
+            if(this.isAlive && !this.bossDead){
                 switch (event.code) {
                     case this.keys.JUMP:
                         this.pressedKeys.jump = false;
